@@ -15,9 +15,9 @@ const FALL_DURATIONS = {
   medium: [15000, 30000],
   slow: [30000, 60000],
 };
-const SNOWFLAKE_TYPES = ["❄", "❅", "❆"];
+const SNOWFLAKE_TYPES = ["🍂", "🍁", "🍃"];
 
-export default function Snowflake({ scene, fallSpeed }) {
+export default function LeavesParticle({ scene, fallSpeed }) {
   const [config, setConfig] = useState(() =>
     getConfig({ scene, fallSpeed, initialDelay: true })
   );
@@ -87,7 +87,7 @@ export default function Snowflake({ scene, fallSpeed }) {
 
   const translateX = animatedSideMovement.interpolate({
     inputRange: [-1, 1],
-    outputRange: [-config.sideMovementAmplitude, config.sideMovementAmplitude],
+    outputRange: [-config.sideMovementAmplitude*2, 0],
   });
 
   return (
@@ -95,7 +95,7 @@ export default function Snowflake({ scene, fallSpeed }) {
       style={[
         styles.snowflake,
         {
-          transform: [{ translateY: animatedY }, { rotate }, { translateX }],
+          transform: [{ translateY: animatedY }, { translateX }],
         },
         {
           left: config.xPosition,
@@ -125,11 +125,11 @@ function getConfig({ scene, initialDelay = false, fallSpeed } = {}) {
   const fallDuration = randomInt(...FALL_DURATIONS[speed]);
   const fallDelay = randomInt(500, initialDelay ? 20000 : 10000);
   // rotate animation
-  const rotationDuration = randomInt(2000, 10000);
-  const rotationDirection = randomInt(0, 1);
+  const rotationDuration = randomInt(200, 300);
+  const rotationDirection = randomInt(0);
   // side shake animation
-  const sideMovementDuration = randomInt(3000, 8000);
-  const sideMovementAmplitude = randomInt(0, 50);
+  const sideMovementDuration = randomInt(2000, 4000);
+  const sideMovementAmplitude = randomInt(-300, -150);
 
   return {
     size,
